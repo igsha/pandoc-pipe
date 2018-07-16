@@ -1,18 +1,12 @@
 { pkgs ? import <nixpkgs> {} }:
 
-pkgs.stdenv.mkDerivation rec {
-  name = "${pname}-${version}";
+pkgs.python3Packages.buildPythonApplication rec {
   pname = "pandoc-pipe";
-  version = "0.0.1";
+  version = "0.0.2";
 
   src = ./.;
 
-  buildCommand = ''
-    mkdir -p $out/bin
-    cp ${src}/${pname} $out/bin
-  '';
-
-  propagatedNativeBuildInputs = with pkgs; [ panflute ];
+  propagatedBuildInputs = with pkgs; [ panflute ];
 
   meta = with pkgs.stdenv.lib; {
     description = "A panflute filter to pipe CodeBlock into external program";
