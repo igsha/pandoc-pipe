@@ -1,14 +1,14 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ stdenv, panflute, python3Packages }:
 
-pkgs.python3Packages.buildPythonApplication rec {
+python3Packages.buildPythonApplication rec {
   pname = "pandoc-pipe";
   version = "0.0.2";
 
   src = ./.;
 
-  propagatedBuildInputs = with pkgs; [ panflute ];
+  propagatedNativeBuildInputs = [ panflute ];
 
-  meta = with pkgs.stdenv.lib; {
+  meta = with stdenv.lib; {
     description = "A panflute filter to pipe CodeBlock into external program";
     homepage = https://github.com/igsha/pandoc-pipe;
     license = licenses.mit;

@@ -15,7 +15,7 @@ def prepare(doc):
     })
 
 def action(elem, doc):
-    if isinstance(elem, pf.CodeBlock):
+    if isinstance(elem, pf.CodeBlock) and hasattr(elem, 'classes'):
         global classes
         for cls, cmd in classes.items():
             if cls in elem.classes:
@@ -23,6 +23,7 @@ def action(elem, doc):
                     cmd = json.loads(elem.attributes['command'])
                 out = pf.shell(cmd, wait=True, msg=elem.text.encode('utf-8'))
                 elem = pf.RawBlock(out.decode('utf-8'), format='html')
+                break
 
     return elem
 
