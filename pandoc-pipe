@@ -1,29 +1,53 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 import panflute as pf
-import json
+import json, functools
 
 classes = None
 
 def prepare(doc):
     global classes
     classes = doc.get_metadata('pandoc-pipe', {
-        'plantuml': ["plantuml", "-tsvg", "-pipe"]
+        'plantuml': ["plantuml", "-tsvg", "-pipe"],
+        'dot': ["dot", "-Tsvg"]
     })
 
+def stringify(element):
+    '''
+    This function does not preserve: trailing spaces, additional newline between paragraphs.
+    To avoid this, use inner CodeBlock
+    '''
+    def attach_str(e, doc, answer):
+        if hasattr(e, 'text'):
+            ans = e.text
+        elif isinstance(e, pf.Space):
+            ans = ' '
+        elif isinstance(e, (pf.SoftBreak, pf.LineBreak, pf.Para)):
+            ans = '\n'
+        else:
+            ans = ''
+
+        answer.append(ans)
+
+    answer = []
+    f = functools.partial(attach_str, answer=answer)
+    element.walk(f)
+
+    return ''.join(answer)
+
 def action(elem, doc):
-    if isinstance(elem, pf.CodeBlock) and hasattr(elem, 'classes'):
-        global classes
-        for cls, cmd in classes.items():
-            if cls in elem.classes:
-                if 'command' in elem.attributes:
-                    cmd = json.loads(elem.attributes['command'])
-                out = pf.shell(cmd, wait=True, msg=elem.text.encode('utf-8'))
-                elem = pf.RawBlock(out.decode('utf-8'), format='html')
-                break
+    if isinstance(elem, pf.Div) and 'execute' in elem.attributes:
+        if 'command' in elem.attributes:
+            cmd = json.loads(elem.attributes['command'])
+        else:
+            global classes
+            cmd = classes[elem.classes[0]]
+
+        out = pf.shell(cmd, wait=True, msg=stringify(elem).encode('utf-8'))
+        elem = pf.RawBlock(out.decode('utf-8'), format='html')
 
     return elem
 

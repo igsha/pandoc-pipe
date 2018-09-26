@@ -1,0 +1,106 @@
+{
+  "blocks": [
+    {
+      "t": "Div",
+      "c": [
+        [
+          "",
+          [
+            "sometype"
+          ],
+          [
+            [
+              "execute",
+              ""
+            ],
+            [
+              "command",
+              "[\"cat\"]"
+            ]
+          ]
+        ],
+        [
+          {
+            "t": "DefinitionList",
+            "c": [
+              [
+                [
+                  {
+                    "t": "Str",
+                    "c": "this"
+                  },
+                  {
+                    "t": "Space"
+                  },
+                  {
+                    "t": "Str",
+                    "c": "is"
+                  },
+                  {
+                    "t": "Space"
+                  },
+                  {
+                    "t": "Str",
+                    "c": "line"
+                  }
+                ],
+                [
+                  [
+                    {
+                      "t": "Para",
+                      "c": [
+                        {
+                          "t": "Str",
+                          "c": "spaces"
+                        }
+                      ]
+                    }
+                  ]
+                ]
+              ]
+            ]
+          },
+          {
+            "t": "Para",
+            "c": [
+              {
+                "t": "Str",
+                "c": "another"
+              },
+              {
+                "t": "Space"
+              },
+              {
+                "t": "Str",
+                "c": "line"
+              }
+            ]
+          },
+          {
+            "t": "Para",
+            "c": [
+              {
+                "t": "Str",
+                "c": "new"
+              },
+              {
+                "t": "Space"
+              },
+              {
+                "t": "Str",
+                "c": "line"
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "pandoc-api-version": [
+    1,
+    17,
+    5,
+    1
+  ],
+  "meta": {}
+}

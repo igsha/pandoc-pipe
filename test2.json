@@ -1,21 +1,3 @@
-# pandoc-pipe
-
-Pipe CodeBlock inside special Div to an external program and insert its output as raw html.
-
-```
-$ pandoc -f rst -t json
-.. class:: sometype
-    :execute:
-    :command: ["echo", "123"]
-
-    ::
-
-        another word
-        to fight
-            spaces
-
-        new line
-<Ctrl-D>
 {
   "blocks": [
     {
@@ -24,7 +6,7 @@ $ pandoc -f rst -t json
         [
           "",
           [
-            "sometype"
+            "megatype"
           ],
           [
             [
@@ -33,7 +15,7 @@ $ pandoc -f rst -t json
             ],
             [
               "command",
-              "[\"echo\", \"123\"]"
+              "[\"cat\"]"
             ]
           ]
         ],
@@ -46,7 +28,7 @@ $ pandoc -f rst -t json
                 [],
                 []
               ],
-              "another word\nto fight\n    spaces\n\nnew line"
+              "Code block\n   does not skip my\n\n sentences and spaces   "
             ]
           }
         ]
@@ -61,4 +43,3 @@ $ pandoc -f rst -t json
   ],
   "meta": {}
 }
-```
