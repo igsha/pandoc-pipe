@@ -6,7 +6,7 @@ python3Packages.buildPythonApplication rec {
 
   src = ./.;
 
-  propagatedNativeBuildInputs = [ panflute ];
+  propagatedBuildInputs = [ panflute ];
 
   meta = with stdenv.lib; {
     description = "A panflute filter to pipe Div class to external program";
