@@ -1,4 +1,4 @@
-{ stdenv, panflute, python3Packages }:
+{ stdenv, lib, panflute, python3Packages }:
 
 python3Packages.buildPythonApplication rec {
   pname = "pandoc-pipe";
@@ -8,7 +8,7 @@ python3Packages.buildPythonApplication rec {
 
   propagatedBuildInputs = [ panflute ];
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "A panflute filter to pipe Div class to external program";
     homepage = https://github.com/igsha/pandoc-pipe;
     license = licenses.mit;
